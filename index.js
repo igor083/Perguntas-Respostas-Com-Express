@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
 const connection = require("./dataBase/database");
-const perguntaModel1 = require("./dataBase/Pergunta")
+const Pergunta = require("./dataBase/Pergunta")
 
 //database
 connection
@@ -25,8 +25,12 @@ app.use(bodyParser.json());
 
 //rotas
 app.get("/",(req,res) => {
-    //metodo render busca na pasta views o arquivo em html ou derivados
-    res.render("index");
+    Pergunta.findAll({raw:true}).then(perguntas =>{
+        res.render("index",{//jogando as perguntas para o front
+            perguntas:perguntas
+        });
+    });//SELECT * FROM perguntas
+    
 });
 
 app.get("/perguntar",(req,res) => {
@@ -34,10 +38,14 @@ app.get("/perguntar",(req,res) => {
 });
 
 app.post("/salvarpergunta",(req,res)=>{
-    var nome = req.body.nome;
-    var pergunta = req.body.pergunta;
-res.send("Formulario recebido<br>"+ nome + "<br> "+ pergunta);
-
+    var nome = req.body.nome;//Salvando dados do form na variavel
+    var pergunta = req.body.pergunta;//Salvando dados do form na variavel
+    Pergunta.create({//INSERT  na tabela perguntas
+        nome:nome,
+        pergunta:pergunta,
+    }).then(()=>{
+        res.redirect("/")//se conseguir vai direcionar usuario para pagina principal
+    })
 });
 
 
