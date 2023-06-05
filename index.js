@@ -2,7 +2,8 @@ const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
 const connection = require("./dataBase/database");
-const Pergunta = require("./dataBase/Pergunta")
+const Pergunta = require("./dataBase/Pergunta");
+const { where } = require("sequelize");
 
 //database
 connection
@@ -25,7 +26,9 @@ app.use(bodyParser.json());
 
 //rotas
 app.get("/",(req,res) => {
-    Pergunta.findAll({raw:true}).then(perguntas =>{
+    Pergunta.findAll({raw:true, order:[
+        ['id','DESC']//enviando para o front a ordenacao das perguntas com base no id da database
+    ]}).then(perguntas =>{
         res.render("index",{//jogando as perguntas para o front
             perguntas:perguntas
         });
@@ -49,7 +52,18 @@ app.post("/salvarpergunta",(req,res)=>{
 });
 
 
-
+app.get("/pergunta/:id",(req,res)=>{
+    var id = req.params.id;
+    Pergunta.findOne({
+        where: {id:id}
+    }).then(pergunta=>{
+        if(pergunta!= undefined){//pergunta encontrada
+            res.render("pergunta");
+        }else{
+            res.redirect("/");
+        }
+    })
+})
 
 
 //subindo o app
