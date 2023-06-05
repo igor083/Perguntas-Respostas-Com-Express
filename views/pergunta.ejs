@@ -1,9 +1,12 @@
+<%- include('./partials/header') %>
 
-<%- include('./partials/header.ejs')%>
-<body>
-    texto
-</body>
-
-<%- include('./partials/footer.ejs')%>
-
-
+    <body>
+        <%- include('./partials/navbar') %>
+            <div class="container">
+              <hr>
+              <h5><%=pergunta.nome%></h5>
+              <h1><%=pergunta.pergunta%></h1>
+              <hr>
+            </div>
+    </body>
+    <%- include('./partials/footer') %>
