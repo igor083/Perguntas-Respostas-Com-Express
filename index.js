@@ -5,20 +5,36 @@ const app = express();
 app.set('view engine','ejs')
 
 
-
-
-
-app.get("/",(req,res) => {
+app.get("/:nome/:ling",(req,res) => {
     //metodo render busca na pasta views o arquivo em html ou derivados
-    res.render("index.ejs");
+    var nome = req.params.nome;
+    var ling = req.params.ling;
+    var exibirmsg=false;
+
+    var produtos = [
+        {nome:"doritos",preco:3.14},
+        {nome:"cheetos",preco:2.50},
+        {nome:"coca-cola",preco:3.50}
+    
+    ];
+    
+    res.render("index",{
+        nome:nome,
+        ling:ling,
+        inscritos:300,
+        msg:exibirmsg,
+        produtos:produtos
+    });
 });
-app.get("/home",(req,res) => {
-    //metodo render busca na pasta views o arquivo em html ou derivados
-    res.render("home.ejs");
-});
 
 
 
+
+
+
+
+
+//subindo o app
 app.listen(8080,()=>{
     console.log("App rodando!")
 });

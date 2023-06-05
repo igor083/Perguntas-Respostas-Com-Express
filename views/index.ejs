@@ -1,15 +1,40 @@
 <!DOCTYPE html>
-<html lang="PT-BR">
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>P&R</title>
 </head>
+
 <body>
-    
+
     <h1>P&R</h1>
     <hr>
     <h3> Lista de perguntas!</h3>
+
+    <p>Nome: <%= nome %>
+    </p>
+    <p>Ling. favorita: <%= ling %>
+    </p>
+    <p>Quant.incritos: <%= inscritos %>
+    </p>
+
+    <% if(msg){ %>
+        <h3>Erro 404</h3>
+
+    <%}else{%>
+            <h3>nenhum erro!</h3>
+    <%}%>
+
+    <% produtos.forEach((produto)=>{ %>
+        <%=produto.nome%>
+        <%=produto.preco%>
+        <br>
+    <% })%>
+
+
 </body>
+
 </html>
